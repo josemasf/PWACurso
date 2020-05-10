@@ -5,3 +5,11 @@ if('serviceWorker' in navigator){
             console.log('Service worker registered');
         });
 }
+
+
+window.addEventListener('beforeinstallpromt', function(event){
+    console.log('beforeinstallpromt fired');
+    event.preventDefault();
+    deferredPromt = event;
+    return false;
+})
