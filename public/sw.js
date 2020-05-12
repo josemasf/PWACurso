@@ -38,6 +38,7 @@ self.addEventListener('fetch', function(event) {
         } else{
           return fetch(event.request)
           .then(function(res){
+            //creo una caché dinamica para las cosas no forzadas a cachear
             caches.open('dynamic')
               .then(function(cache){
                 cache.put(event.request.url, res.clone());
