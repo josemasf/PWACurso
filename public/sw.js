@@ -2,7 +2,7 @@ self.addEventListener('install', function(event) {
   console.log('[Service Worker] Installing Service Worker ...', event);
   //crear almacen de caché
   event.waitUntil(
-    caches.open('static')
+    caches.open('static-v2')
       .then(function(cache){
         console.log('[Service Worker] Preching APP Sell');        
         cache.addAll([
@@ -25,6 +25,20 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
   console.log('[Service Worker] Activating Service Worker ....', event);
+
+  //Como son promesas se debe esperar a que todas respondan. Recorremos las key y borramos las viejas
+  event.waitUntil(
+    caches.keys()
+    .then(function(keyList){
+      return Promise.all(keyList.map(function(key){
+        if(key !== 'static-v2' && key !=='dynamic') {
+          console.log('[SW] Borrando cachés antiguas ...', key);
+          return caches.delete(key);
+        }
+      }));
+    })
+  );
+
   return self.clients.claim();
 });
 
