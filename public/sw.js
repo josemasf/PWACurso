@@ -73,7 +73,7 @@ self.addEventListener('fetch', function(event) {
 });
 */
 
-///CACH ONLY
+///CACHE ONLY
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     ///Recupero los datos de la caché de datos
