@@ -11,6 +11,7 @@ self.addEventListener('install', function(event) {
         cache.addAll([
           '/',
           '/index.html',
+          '/offline.html',
           '/src/js/app.js',
           '/src/js/feed.js',
           '/src/js/material.min.js',
@@ -61,6 +62,9 @@ self.addEventListener('fetch', function(event) {
                 cache.put(event.request.url, res.clone());
                 return res;
               });
+          }).catch(async function(err){
+            const cache = await caches.open(CACHE_STATIC_NAME);
+            return cache.match('/offline.html');
           });
         }
       })
