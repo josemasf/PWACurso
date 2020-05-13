@@ -80,3 +80,14 @@ self.addEventListener('fetch', function(event) {
     caches.match(event.request)      
   );
 });
+
+//Devolver respuesta siempre que haya conectividad, si no caché.
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+      fetch(event.request)
+        .catch(function(err){
+          ///Recupero los datos de la caché de datos
+          return caches.match(event.request);         
+        })
+  );
+});
