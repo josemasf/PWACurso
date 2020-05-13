@@ -81,10 +81,17 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-//Devolver respuesta siempre que haya conectividad, si no caché.
+//Devolver respuesta siempre que haya conectividad, si no caché con caché dinamica.
 self.addEventListener('fetch', function(event) {
   event.respondWith(
       fetch(event.request)
+        .then(function(res){
+        //creo una caché dinamica para las cosas no forzadas a cachear
+        caches.open(CACHE_DYNAMIC_NAME)
+          .then(function(cache){
+            cache.put(event.request.url, res.clone());
+            return res;
+          })
         .catch(function(err){
           ///Recupero los datos de la caché de datos
           return caches.match(event.request);         
