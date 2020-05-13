@@ -74,12 +74,12 @@ self.addEventListener('fetch', function(event) {
 */
 
 ///CACHE ONLY
-self.addEventListener('fetch', function(event) {
+/*self.addEventListener('fetch', function(event) {
   event.respondWith(
     ///Recupero los datos de la caché de datos
     caches.match(event.request)      
   );
-});
+});*/
 
 //Devolver respuesta siempre que haya conectividad, si no caché con caché dinamica.
 self.addEventListener('fetch', function(event) {
