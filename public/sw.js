@@ -46,6 +46,7 @@ self.addEventListener('activate', function(event) {
   return self.clients.claim();
 });
 
+/*
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     ///Recupero los datos de la caché de datos
@@ -68,5 +69,14 @@ self.addEventListener('fetch', function(event) {
           });
         }
       })
+  );
+});
+*/
+
+///CACH ONLY
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    ///Recupero los datos de la caché de datos
+    caches.match(event.request)      
   );
 });
